@@ -1,0 +1,22 @@
+--GROUPBY
+--Activity8
+--Write an SQL statement to find the highest purchase amount ordered by the each customer with their ID and their highest purchase amount.
+SELECT customer_id, MAX(purchase_amount) AS Highest_purchase_amount
+FROM orders
+GROUP BY customer_id
+ORDER BY 2;
+
+--Write an SQL statement to find the highest purchase amount on '2012-08-17' for each salesman with their ID.
+SELECT salesman_id, 
+MAX(purchase_amount) AS Highest_purchase_amount
+FROM orders
+WHERE order_date = To_Date('2012/08/17', 'YYYY/MM/DD')
+GROUP BY salesman_id,Order_date;
+
+--Write an SQL statement to find the highest purchase amount with the order ID and order date, for only those customers who have a higher purchase amount within the given list: [2030, 3450, 5760, 6000].
+SELECT customer_id, order_date,
+MAX(purchase_amount) AS Highest_purchase_amount 
+FROM orders
+GROUP BY customer_id,order_date
+Having MAX(purchase_amount) in (2030, 3450, 5760, 6000);
+
