@@ -1,0 +1,27 @@
+--Activity10
+SELECT * FROM CUSTOMERS;
+--Write a query to find all the orders issued against the salesman who may works for customer whose id is 3007.
+SELECT *
+FROM orders
+WHERE salesman_id = (SELECT DISTINCT salesman_id FROM orders WHERE customer_id=3007);
+
+--Write a query to find all orders attributed to a salesman in New York.
+SELECT * FROM ORDERS
+WHERE salesman_id = (select salesman_id from salesman where salesman_city = 'New York');
+
+--Write a query to count the customers with grades above New York's average.
+SELECT grade, COUNT(*) as CUST FROM CUSTOMERS
+GROUP BY grade
+HAVING grade > (SELECT avg(grade) as avg_grade
+FROM CUSTOMERS
+WHERE city = 'New York');
+
+--Write a query to extract the data from the orders table for those salesman who earned the maximum commission
+SELECT order_no, purchase_amount,order_date,salesman_id FROM orders
+WHERE salesman_id 
+    IN (SELECT salesman_id 
+        FROM salesman --geting salesman_ids from salesman
+        WHERE commission=
+            ( SELECT MAX(commission) 
+                FROM salesman)); --Getting the Max commission earn by each salesman
+
